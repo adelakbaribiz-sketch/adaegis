@@ -2,6 +2,26 @@
 
 Format: decision, why, what it rules out for now.
 
+## Lazy-load Recharts
+
+**Decision:** Load the three chart components (`ShareOfVoiceChart`,
+`SpendConversionsChart`, `DefenseAttackChart`) via `next/dynamic` instead of
+static imports, with a skeleton shown while each chunk loads.
+
+**Why:** measured via `du -sh .next/static/chunks/*.js` after a production
+build, Recharts resolves to a single ~350KB chunk — by far the heaviest
+dependency in this app, used on exactly two routes (`/dashboard`,
+`/reports`). Splitting it into its own lazily-fetched chunk keeps it off the
+critical path for hydrating the rest of those pages, and off every other
+route's bundle entirely. On `/reports` (a Client Component) this uses
+`ssr: false`, so the server doesn't render chart markup it would otherwise
+discard on first paint; on `/dashboard` (a Server Component, where
+`ssr: false` isn't allowed) it keeps the default `ssr: true` and still gets
+the code-splitting benefit.
+
+**Rules out:** nothing — this is a transparent optimization with no
+behavior change, verified with `npm run build` before and after.
+
 ## Frontend-first, mock data, no backend
 
 **Decision:** Build a fully-navigable Next.js frontend against static typed
@@ -50,6 +70,27 @@ network dependency from the build entirely.
 
 **Rules out:** custom webfont branding — revisit with self-hosted font files
 (`next/font/local`) if a specific typeface becomes part of the brand.
+
+## Where 3D/depth is used, and where it deliberately isn't
+
+**Decision:** Add a small elevation system (`.surface-raised/-elevated/-floating`
++ a `.depth-interactive` hover lift, defined in `globals.css`) and apply it
+to exactly three places: the dashboard KPI tiles (`StatTile`), the
+competitor threat cards on `/competitors`, and the workflow pipeline
+viewer's container. Everything else — tables, forms, the settings tabs, the
+billing invoice list, the alert feed — stays flat, with no shadow, lift, or
+transition beyond a plain background-color hover.
+
+**Why:** depth should mark what's worth noticing (a KPI, a competitive
+threat, "here is the automation logic that runs"), not decorate every
+card — a dashboard where every element floats communicates nothing. Tables
+and forms are read quickly and repeatedly; adding motion or shadow there
+would slow down scanning for no benefit. `prefers-reduced-motion` disables
+the hover-lift transform entirely (see `globals.css`).
+
+**Rules out:** decorative glass/gradient surfaces, WebGL/Three.js (no
+element in this app needs true 3D — CSS transform + box-shadow is
+sufficient and far cheaper), and applying the effect to any list/table row.
 
 ## Read-only workflow pipeline viewer, not a drag-and-drop canvas
 

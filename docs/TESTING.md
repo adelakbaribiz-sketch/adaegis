@@ -2,19 +2,43 @@
 
 ## What was actually run
 
-No automated test suite exists yet (see "Not implemented" below). Before
-calling this build done, the following checks were run manually and their
-real output is recorded here.
-
 | Check | Command | Result |
 |---|---|---|
 | Production build | `npm run build` | ✅ PASSED — compiles, type-checks, and prerenders all 13 routes |
 | Lint | `npm run lint` | ✅ PASSED — zero errors, zero warnings |
+| Unit tests | `npm run test` | ✅ PASSED — 7/7 (Vitest — see "Unit tests" below) |
 | Console errors (each route, browser) | manual, via dev server | ✅ PASSED after fix (see below) |
 | Responsive layout (375px mobile width) | manual, dashboard + nav | ✅ PASSED after fix (see below) |
 | Broken links / 404 handling | manual — visited an invalid `/campaigns/xyz` id | ✅ PASSED — renders custom `not-found.tsx` |
 | Missing assets | manual — checked network tab | ✅ PASSED — no 404s on load |
 | Env vars | inspection | ✅ PASSED — build has zero required env vars (see `.env.example`) |
+| Bundle size evidence | `du -sh .next/static/chunks/*.js` | Recharts is a ~350KB chunk; now lazy-loaded (see [DECISIONS.md](DECISIONS.md)) |
+
+## Unit tests (added in the upgrade pass)
+
+`npm run test` runs Vitest against `src/lib/*.test.ts`:
+
+- **`utils.test.ts`** — `formatCurrency`, `formatCompactNumber`,
+  `formatPercent` (specifically checks for the double-`%` regression fixed
+  below), and `timeAgo`.
+- **`auth.test.ts`** — a direct regression test for the hydration bug fixed
+  below: it runs in Vitest's default `node` environment (no `window`
+  global, the same as a Next.js Server Component render) and asserts
+  `isSignedIn()` returns `false` rather than throwing.
+
+Not yet covered: component/interaction tests (Playwright/Testing Library)
+for filter/toggle behavior on Campaigns, Alerts, Workflows — see "Not
+implemented" below.
+
+## Visual QA note for this upgrade pass
+
+The design-system/depth changes (elevation tokens, hover-lift on StatTile
+and competitor cards, mobile-nav styling) were verified by build output and
+code review, not by re-driving the app in a live browser — this
+environment's dev-server slot limit was occupied by other concurrent
+sessions at the time. The base app's interaction flows (login, nav,
+filters, hydration) were verified live in the prior pass — see the entries
+below.
 
 ## Issues found and fixed during this pass
 
@@ -51,12 +75,16 @@ real output is recorded here.
 
 ## Not implemented (real gap, not a false claim)
 
-- No unit tests (e.g. Vitest/Jest) for `src/lib/utils.ts` formatters.
 - No component or interaction tests (e.g. Playwright/Testing Library) for
   filter/toggle behavior on Campaigns, Alerts, Workflows.
-- No CI pipeline running any of the above on push.
+- No live-browser visual QA pass for the depth/elevation changes in this
+  upgrade (see note above).
+- No accessibility audit tooling (axe/Lighthouse) run — focus-visible
+  styling and `prefers-reduced-motion` handling were added and reviewed by
+  hand, not machine-verified.
 
-This is a real limitation, not an oversight to hide: a portfolio-stage demo
-with static mock data has a small, manually-verifiable surface, but a real
-product built on this foundation should not ship further without test
-coverage on the data-formatting utilities and the auth gate at minimum.
+## CI
+
+`.github/workflows/ci.yml` runs `npm ci`, lint, test, and build on every
+push and pull request to `main`. This did not exist before this upgrade
+pass — there was no CI at all.

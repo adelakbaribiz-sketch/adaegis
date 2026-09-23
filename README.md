@@ -70,8 +70,8 @@ a real backend, in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## Tech stack
 
-Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Recharts ·
-lucide-react
+Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Recharts (lazy-loaded)
+· lucide-react · Vitest
 
 ## Installation
 
@@ -80,6 +80,7 @@ npm install
 npm run dev      # http://localhost:3000
 npm run build    # production build
 npm run lint     # ESLint
+npm run test     # Vitest unit tests
 ```
 
 No environment variables are required to run this build — see
@@ -143,6 +144,7 @@ what's real, mocked, proposed, or not implemented in this repository.
 | [DEPLOYMENT.md](docs/DEPLOYMENT.md) | How to deploy, what's needed for real deploy |
 | [TESTING.md](docs/TESTING.md) | What was checked, what was fixed, what's missing |
 | [LIMITATIONS.md](docs/LIMITATIONS.md) | Honest real/mock/proposed status |
+| [UPGRADE-REPORT.md](docs/UPGRADE-REPORT.md) | Before/after from the quality + design upgrade pass |
 
 ## Portfolio case study
 
