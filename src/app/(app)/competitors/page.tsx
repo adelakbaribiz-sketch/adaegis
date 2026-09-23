@@ -7,14 +7,9 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sparkline } from "@/components/ui/sparkline";
-import { competitors, type Competitor } from "@/lib/mock-data";
+import { competitors } from "@/lib/mock-data";
+import { threatTone } from "@/lib/tone";
 import { cn, timeAgo } from "@/lib/utils";
-
-const threatTone: Record<Competitor["threatLevel"], "danger" | "amber" | "neutral"> = {
-  high: "danger",
-  medium: "amber",
-  low: "neutral",
-};
 
 const levels = ["All", "high", "medium", "low"] as const;
 
@@ -55,7 +50,7 @@ export default function CompetitorsPage() {
           <Link
             key={c.id}
             href={`/competitors/${c.id}`}
-            className="rounded-lg border border-border bg-surface p-5 transition-colors hover:bg-surface-hover"
+            className="surface-elevated depth-interactive rounded-lg border border-border bg-surface p-5 transition-colors hover:bg-surface-hover"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">

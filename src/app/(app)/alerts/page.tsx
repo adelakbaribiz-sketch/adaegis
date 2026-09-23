@@ -6,14 +6,9 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { alerts as initialAlerts, type AlertItem } from "@/lib/mock-data";
+import { alerts as initialAlerts } from "@/lib/mock-data";
+import { severityTone } from "@/lib/tone";
 import { cn, formatDateTime } from "@/lib/utils";
-
-const severityTone: Record<AlertItem["severity"], "danger" | "amber" | "cyan"> = {
-  critical: "danger",
-  warning: "amber",
-  info: "cyan",
-};
 
 const severities = ["All", "critical", "warning", "info"] as const;
 type SeverityFilter = (typeof severities)[number];

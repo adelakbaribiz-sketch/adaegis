@@ -7,20 +7,9 @@ import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { campaigns, type Campaign } from "@/lib/mock-data";
+import { campaigns } from "@/lib/mock-data";
+import { domainTone, statusTone } from "@/lib/tone";
 import { cn, formatCurrency, formatPercent } from "@/lib/utils";
-
-const modeTone: Record<Campaign["mode"], "amber" | "cyan" | "neutral"> = {
-  Defense: "amber",
-  Attack: "cyan",
-  Standard: "neutral",
-};
-
-const statusTone: Record<Campaign["status"], "success" | "neutral" | "danger"> = {
-  active: "success",
-  paused: "neutral",
-  draft: "danger",
-};
 
 const modes = ["All", "Defense", "Attack", "Standard"] as const;
 
@@ -110,7 +99,7 @@ export default function CampaignsPage() {
                     {c.competitor ? <p className="text-xs text-ink-faint">vs. {c.competitor}</p> : null}
                   </td>
                   <td className="px-5 py-3">
-                    <Badge tone={modeTone[c.mode]}>{c.mode}</Badge>
+                    <Badge tone={domainTone[c.mode]}>{c.mode}</Badge>
                   </td>
                   <td className="px-5 py-3">
                     <Badge tone={statusTone[c.status]} className="capitalize">

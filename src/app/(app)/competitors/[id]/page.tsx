@@ -6,14 +6,9 @@ import { StatTile } from "@/components/ui/stat-tile";
 import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkline } from "@/components/ui/sparkline";
-import { competitors, type Competitor } from "@/lib/mock-data";
+import { competitors } from "@/lib/mock-data";
+import { threatTone } from "@/lib/tone";
 import { formatDateTime } from "@/lib/utils";
-
-const threatTone: Record<Competitor["threatLevel"], "danger" | "amber" | "neutral"> = {
-  high: "danger",
-  medium: "amber",
-  low: "neutral",
-};
 
 export default async function CompetitorDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -52,7 +52,7 @@ export function Topbar() {
       </div>
 
       {menuOpen && (
-        <div className="absolute inset-x-0 top-14 z-20 border-b border-border bg-canvas-raised shadow-lg md:hidden">
+        <div className="surface-floating absolute inset-x-0 top-14 z-20 border-b border-border bg-canvas-raised md:hidden">
           <div className="flex items-center gap-2 px-5 pb-2 pt-3 text-ink-faint">
             <ShieldHalf className="h-4 w-4 text-amber" strokeWidth={2} />
             <span className="text-xs">AdAegis</span>

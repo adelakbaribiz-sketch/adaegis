@@ -6,21 +6,9 @@ import { Plus, Play, Pause } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { workflows as initialWorkflows, type Workflow } from "@/lib/mock-data";
+import { workflows as initialWorkflows } from "@/lib/mock-data";
+import { domainTone, statusTone } from "@/lib/tone";
 import { cn } from "@/lib/utils";
-
-const categoryTone: Record<Workflow["category"], "amber" | "cyan" | "success" | "neutral"> = {
-  Defense: "amber",
-  Attack: "cyan",
-  Optimization: "success",
-  Retargeting: "neutral",
-};
-
-const statusTone: Record<Workflow["status"], "success" | "neutral" | "danger"> = {
-  active: "success",
-  paused: "neutral",
-  draft: "danger",
-};
 
 export default function WorkflowsPage() {
   const [workflows, setWorkflows] = useState(initialWorkflows);
@@ -57,7 +45,7 @@ export default function WorkflowsPage() {
                   <Link href={`/workflows/${w.id}`} className="text-sm font-semibold text-ink hover:text-amber">
                     {w.name}
                   </Link>
-                  <Badge tone={categoryTone[w.category]}>{w.category}</Badge>
+                  <Badge tone={domainTone[w.category]}>{w.category}</Badge>
                 </div>
                 <p className="mt-1.5 text-sm text-ink-muted">{w.description}</p>
               </div>
@@ -69,6 +57,7 @@ export default function WorkflowsPage() {
                     w.status === "active" ? "text-ink-muted hover:text-danger" : "text-ink-muted hover:text-success"
                   )}
                   title={w.status === "active" ? "Pause workflow" : "Activate workflow"}
+                  aria-label={w.status === "active" ? `Pause ${w.name}` : `Activate ${w.name}`}
                 >
                   {w.status === "active" ? <Pause className="h-4 w-4" strokeWidth={1.75} /> : <Play className="h-4 w-4" strokeWidth={1.75} />}
                 </button>

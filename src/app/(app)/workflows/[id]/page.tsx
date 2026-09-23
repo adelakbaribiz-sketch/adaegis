@@ -4,15 +4,9 @@ import { ArrowLeft, Zap, GitBranch, Play } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatTile } from "@/components/ui/stat-tile";
 import { Badge } from "@/components/ui/badge";
-import { workflows, type Workflow, type WorkflowStep } from "@/lib/mock-data";
+import { workflows, type WorkflowStep } from "@/lib/mock-data";
+import { domainTone } from "@/lib/tone";
 import { formatDateTime } from "@/lib/utils";
-
-const categoryTone: Record<Workflow["category"], "amber" | "cyan" | "success" | "neutral"> = {
-  Defense: "amber",
-  Attack: "cyan",
-  Optimization: "success",
-  Retargeting: "neutral",
-};
 
 const stepIcon: Record<WorkflowStep["kind"], typeof Zap> = {
   trigger: Zap,
@@ -41,7 +35,7 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
       <PageHeader
         title={workflow.name}
         description={workflow.description}
-        action={<Badge tone={categoryTone[workflow.category]}>{workflow.category}</Badge>}
+        action={<Badge tone={domainTone[workflow.category]}>{workflow.category}</Badge>}
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -50,7 +44,7 @@ export default async function WorkflowDetailPage({ params }: { params: Promise<{
         <StatTile label="Last run" value={workflow.lastRun === "—" ? "Never" : formatDateTime(workflow.lastRun)} />
       </div>
 
-      <div className="mt-8 rounded-lg border border-border bg-surface p-6">
+      <div className="surface-elevated mt-8 rounded-lg border border-border bg-surface p-6">
         <p className="mb-6 text-xs font-medium uppercase tracking-wide text-ink-muted">Pipeline</p>
         <div className="relative ml-4 space-y-6 border-l border-dashed border-border pl-8">
           {workflow.steps.map((step) => {

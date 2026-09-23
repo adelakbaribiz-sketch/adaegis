@@ -5,20 +5,9 @@ import { PageHeader } from "@/components/ui/page-header";
 import { StatTile } from "@/components/ui/stat-tile";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { campaigns, type Campaign } from "@/lib/mock-data";
+import { campaigns } from "@/lib/mock-data";
+import { domainTone, statusTone } from "@/lib/tone";
 import { formatCurrency, formatPercent } from "@/lib/utils";
-
-const modeTone: Record<Campaign["mode"], "amber" | "cyan" | "neutral"> = {
-  Defense: "amber",
-  Attack: "cyan",
-  Standard: "neutral",
-};
-
-const statusTone: Record<Campaign["status"], "success" | "neutral" | "danger"> = {
-  active: "success",
-  paused: "neutral",
-  draft: "danger",
-};
 
 export default async function CampaignDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -37,7 +26,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
         description={campaign.competitor ? `Conquest campaign targeting ${campaign.competitor}` : "Standard performance campaign"}
         action={
           <div className="flex gap-2">
-            <Badge tone={modeTone[campaign.mode]}>{campaign.mode}</Badge>
+            <Badge tone={domainTone[campaign.mode]}>{campaign.mode}</Badge>
             <Badge tone={statusTone[campaign.status]} className="capitalize">
               {campaign.status}
             </Badge>

@@ -7,16 +7,10 @@ import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { team, tenant } from "@/lib/mock-data";
+import { accentClasses } from "@/lib/tone";
 import { cn, formatDateTime } from "@/lib/utils";
 
 const tabs = ["General", "Team & roles", "Integrations", "API keys", "Danger zone"] as const;
-
-const accentClasses = {
-  amber: "bg-amber/15 text-amber",
-  cyan: "bg-cyan/15 text-cyan",
-  success: "bg-success/15 text-success",
-  danger: "bg-danger/15 text-danger",
-} as const;
 
 const integrations = [
   { name: "Google Ads", connected: true, description: "Campaign, keyword, and Auction Insights sync" },
@@ -164,7 +158,11 @@ export default function SettingsPage() {
               <code className="flex-1 truncate font-mono text-xs text-ink-muted">
                 adaegis_demo_sk_live_4f9a2c1b8e7d6f5a3c2b1a0d
               </code>
-              <button onClick={copyKey} className="shrink-0 text-ink-muted hover:text-ink">
+              <button
+                onClick={copyKey}
+                aria-label={copied ? "API key copied" : "Copy API key"}
+                className="shrink-0 text-ink-muted hover:text-ink"
+              >
                 {copied ? <Check className="h-4 w-4 text-success" strokeWidth={2} /> : <Copy className="h-4 w-4" strokeWidth={1.75} />}
               </button>
             </div>

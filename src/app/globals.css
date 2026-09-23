@@ -81,3 +81,67 @@ body {
 .animate-radar {
   animation: radar-sweep 3.5s linear infinite;
 }
+
+/* ---- Elevation system -------------------------------------------------
+   Five surface levels, used semantically (not decoratively): base (canvas),
+   raised (ordinary cards/tables — flat, fast), elevated (a KPI or an
+   insight worth noticing), floating (something detached from the page flow,
+   like an open menu), modal (reserved for a future dialog). Depth is meant
+   to communicate importance, so most of the UI — tables, forms, settings —
+   stays at "raised" and never lifts. */
+
+.surface-raised {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.surface-elevated {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 20px -8px rgba(0, 0, 0, 0.55);
+}
+
+.surface-floating {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    0 16px 40px -12px rgba(0, 0, 0, 0.65);
+}
+
+/* Subtle lift on hover/focus for the few surfaces where depth carries
+   meaning (see docs/DECISIONS.md, "Where 3D is used"). Never applied to
+   tables, forms, or dense list rows — those stay flat and fast. */
+.depth-interactive {
+  transition:
+    transform 160ms ease-out,
+    box-shadow 160ms ease-out,
+    border-color 160ms ease-out;
+}
+
+.depth-interactive:hover,
+.depth-interactive:focus-visible {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 12px 28px -10px rgba(0, 0, 0, 0.6);
+  border-color: color-mix(in srgb, var(--color-amber) 30%, var(--color-border));
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .depth-interactive:hover,
+  .depth-interactive:focus-visible {
+    transform: none;
+  }
+}

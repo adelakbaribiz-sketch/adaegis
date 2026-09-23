@@ -15,7 +15,7 @@ export function StatTile({
   icon?: LucideIcon;
 }) {
   return (
-    <div className="rounded-lg border border-border bg-surface p-4">
+    <div className="surface-elevated depth-interactive rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium uppercase tracking-wide text-ink-muted">{label}</span>
         {Icon ? <Icon className="h-4 w-4 text-ink-faint" strokeWidth={1.75} /> : null}
