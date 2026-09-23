@@ -1,15 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Download } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
 import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ShareOfVoiceChart } from "@/components/charts/share-of-voice-chart";
-import { SpendConversionsChart } from "@/components/charts/spend-conversions-chart";
-import { DefenseAttackChart } from "@/components/charts/defense-attack-chart";
+import { ChartSkeleton } from "@/components/charts/chart-skeleton";
 import { reportSeries } from "@/lib/mock-data";
 import { cn, formatCurrency } from "@/lib/utils";
+
+// Deferred client-only: see docs/DECISIONS.md, "Lazy-load Recharts" — keeps
+// this page's initial JS off the recharts dependency entirely.
+const ShareOfVoiceChart = dynamic(() => import("@/components/charts/share-of-voice-chart").then((m) => m.ShareOfVoiceChart), {
+  ssr: false,
+  loading: () => <ChartSkeleton />,
+});
+const SpendConversionsChart = dynamic(() => import("@/components/charts/spend-conversions-chart").then((m) => m.SpendConversionsChart), {
+  ssr: false,
+  loading: () => <ChartSkeleton height={260} />,
+});
+const DefenseAttackChart = dynamic(() => import("@/components/charts/defense-attack-chart").then((m) => m.DefenseAttackChart), {
+  ssr: false,
+  loading: () => <ChartSkeleton />,
+});
 
 const ranges = [
   { label: "Last 4 points", points: 4 },

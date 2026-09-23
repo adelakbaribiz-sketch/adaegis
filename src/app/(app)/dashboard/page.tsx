@@ -1,14 +1,22 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Radar, Bell, DollarSign, Workflow as WorkflowIcon, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatTile } from "@/components/ui/stat-tile";
 import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ShareOfVoiceChart } from "@/components/charts/share-of-voice-chart";
+import { ChartSkeleton } from "@/components/charts/chart-skeleton";
 import { alerts, campaigns, competitors, reportSeries, workflows } from "@/lib/mock-data";
+import { severityTone } from "@/lib/tone";
 import { formatCurrency, timeAgo } from "@/lib/utils";
 
-const severityTone = { critical: "danger", warning: "amber", info: "cyan" } as const;
+// Recharts is a ~360KB dependency (measured via `du -sh .next/static/chunks`)
+// used only on this page and /reports — split it into its own chunk so the
+// rest of the dashboard hydrates without waiting on it.
+const ShareOfVoiceChart = dynamic(
+  () => import("@/components/charts/share-of-voice-chart").then((m) => m.ShareOfVoiceChart),
+  { loading: () => <ChartSkeleton /> }
+);
 
 export default function DashboardPage() {
   const totalSpend = campaigns.reduce((sum, c) => sum + c.spend30d, 0);
