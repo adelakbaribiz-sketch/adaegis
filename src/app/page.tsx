@@ -109,13 +109,10 @@ export default function LandingPage() {
       {/* Problem */}
       <section className="border-y border-border-soft bg-canvas-raised">
         <div className="mx-auto max-w-5xl px-6 py-14">
-          <h2 className="text-center text-sm font-semibold uppercase tracking-wide text-amber">
-            The problem
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-lg text-ink">
-            Competitive Google Ads strategy is manual and fragmented: one tool for competitor
-            keywords, another for bid rules, a spreadsheet for price tracking, and Slack for
-            alerts — with nothing reacting in real time.
+          <p className="mx-auto max-w-2xl text-center text-lg text-ink">
+            Competitive Google Ads strategy is manual and fragmented today: one tool for
+            competitor keywords, another for bid rules, a spreadsheet for price tracking, and
+            Slack for alerts — with nothing reacting in real time.
           </p>
         </div>
       </section>
