@@ -51,6 +51,10 @@ backend — nothing fakes success.
 | **Workflows** | **Reports** |
 | ![Automation workflow library](docs/screenshots/workflows.png) | ![Share of voice and spend vs. conversions over time](docs/screenshots/reports.png) |
 
+| Mobile | 
+|---|
+| <img src="docs/screenshots/mobile.png" alt="Dashboard on a phone-sized screen" width="260"> |
+
 *Captured from the demo running locally and signed in with the demo account. All figures are
 synthetic sample data — there is no Google Ads connection.*
 
