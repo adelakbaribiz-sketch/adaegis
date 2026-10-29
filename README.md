@@ -14,6 +14,8 @@ disconnected tools.
 > for the full, explicit real-vs-mock breakdown before drawing any
 > conclusions from what you see here.
 
+![Dashboard — share of voice, unread alerts, managed spend, competitor moves and campaign health](docs/screenshots/dashboard.png)
+
 ## Problem → Solution
 
 Competitive Google Ads strategy today is split across a competitor-intel
@@ -43,8 +45,22 @@ backend — nothing fakes success.
 
 ## Screenshots
 
-Not included as static images in this repository — the fastest way to see
-it is to run it locally (zero configuration, no environment variables
+| Competitors (threat-ranked) | Alert center |
+|---|---|
+| ![Competitors ranked by threat with share-of-voice trends](docs/screenshots/competitors.png) | ![Severity-ranked alert center](docs/screenshots/alert-center.png) |
+| **Workflows** | **Reports** |
+| ![Automation workflow library](docs/screenshots/workflows.png) | ![Share of voice and spend vs. conversions over time](docs/screenshots/reports.png) |
+
+<p>
+  <img src="docs/screenshots/mobile.png" alt="Dashboard on a phone-sized screen" width="260">
+</p>
+
+*Phone-sized screen (390 px wide).*
+
+*Captured from the demo running locally and signed in with the demo account. All figures are
+synthetic sample data — there is no Google Ads connection.*
+
+To see it live, run it locally (zero configuration, no environment variables
 required):
 
 ```bash
